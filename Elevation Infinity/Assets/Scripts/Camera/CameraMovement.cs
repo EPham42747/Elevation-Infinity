@@ -12,6 +12,7 @@ public class CameraMovement : MonoBehaviour {
 
     [Header("Zoom")]
     [SerializeField] private PlayerMovement movement;
+    [SerializeField] private float minZoom;
     [SerializeField] private float maxZoom;
     [SerializeField] private float zoomLerpTime;
     private void Start() {
@@ -28,6 +29,6 @@ public class CameraMovement : MonoBehaviour {
     }
 
     private void Zoom() {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, movement.GetNormalizedVelocity() * maxZoom, zoomLerpTime);
+        cam.orthographicSize = Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, movement.GetNormalizedVelocity() * maxZoom, zoomLerpTime), minZoom, maxZoom);
     }
 }

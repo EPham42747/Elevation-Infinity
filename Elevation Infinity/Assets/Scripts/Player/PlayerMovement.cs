@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Velocity Clamping")]
     [SerializeField] private float maxXSpeed;
     [SerializeField] private float maxYSpeed;
+
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem snowTrail;
+    [SerializeField] private float emissionRate;
     #endregion
 
     private void Start() {
@@ -28,15 +32,26 @@ public class PlayerMovement : MonoBehaviour {
     private void Update() {
         Rotate();
         ClampVelocity();
+        EnableTrail();
     }
 
     private void Rotate() {
-        if (Physics2D.Raycast(groundChecker.position, Vector2.down, checkDistance, groundLayer)) return;
+        if (GetGrounded()) return;
         transform.Rotate(-1 * Vector3.forward * input.GetXAxis() * rotationSpeed * Time.deltaTime);
     }
 
     private void ClampVelocity() {
         rigidbody2d.velocity = new Vector3(Mathf.Clamp(rigidbody2d.velocity.x, 0f, maxXSpeed), Mathf.Clamp(rigidbody2d.velocity.y, -1 * maxYSpeed, 0f), 0f);
+    }
+
+    private void EnableTrail() {
+        var emission = snowTrail.emission;
+        if (GetGrounded()) emission.rateOverTime = emissionRate;
+        else emission.rateOverTime = 0f;
+    }
+
+    private bool GetGrounded() {
+        return Physics2D.Raycast(groundChecker.position, Vector2.down, checkDistance, groundLayer);
     }
 
     public float GetNormalizedVelocity() {
