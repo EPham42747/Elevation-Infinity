@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour {
         Rotate();
         ClampVelocity();
         EnableTrail();
+        ResetAngularVelocity();
     }
 
     private void Rotate() {
@@ -48,6 +49,10 @@ public class PlayerMovement : MonoBehaviour {
         var emission = snowTrail.emission;
         if (GetGrounded()) emission.rateOverTime = emissionRate;
         else emission.rateOverTime = 0f;
+    }
+
+    private void ResetAngularVelocity() {
+        if (!GetGrounded()) rigidbody2d.angularVelocity = 0f;
     }
 
     private bool GetGrounded() {
