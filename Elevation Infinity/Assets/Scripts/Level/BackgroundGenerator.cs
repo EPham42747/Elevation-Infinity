@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(EdgeCollider2D))]
-public class LevelGenerator : MonoBehaviour {
+public class BackgroundGenerator : MonoBehaviour {
     private LineRenderer lineRenderer;
     private MeshRenderer meshRenderer;
     private MeshFilter meshFilter;
-    private EdgeCollider2D edgeCollider;
-    [SerializeField] private int numPositions;
-    [SerializeField] private float size;
-    [SerializeField] private float maxIncrement;
-    [SerializeField] private float yScale;
+    [SerializeField] private LevelGenerator levelGenerator;
+    [SerializeField] private float yOffset;
+    private int numPositions;
+    private float maxIncrement;
+    private float size;
+    private float yScale;
     private float x = 0;
     private float seed;
 
@@ -22,16 +22,20 @@ public class LevelGenerator : MonoBehaviour {
         lineRenderer = GetComponent<LineRenderer>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
-        edgeCollider = GetComponent<EdgeCollider2D>();
+
+        numPositions = levelGenerator.GetNumPositions();
+        maxIncrement = levelGenerator.GetMaxIncrement();
+        size = levelGenerator.GetSize();
+        yScale = levelGenerator.GetYScale();
 
         seed = Random.Range(0f, 1f);
 
         CreateLine();
         CreateFill();
-        CreateCollider();
     }
-    private void Update() {
 
+    private void Update() {
+        
     }
 
     private void CreateLine() {
@@ -45,9 +49,10 @@ public class LevelGenerator : MonoBehaviour {
             float perlin = Mathf.PerlinNoise(i / size, seed);
             increment = (1 - perlin) * maxIncrement;
 
-            positions[i] = new Vector3(x, positions[i - 1].y - yScale * perlin, 0f);
+            positions[i] = new Vector3(x, positions[i - 1].y - yScale * perlin, -1f);
             x += increment;
         }
+        for (int i = 0; i < numPositions; i++) positions[i].y += yOffset;
 
         lineRenderer.SetPositions(positions);
     }
@@ -78,17 +83,4 @@ public class LevelGenerator : MonoBehaviour {
         fill.SetTriangles(triangles, 0);
         meshFilter.mesh = fill;
     }
-
-    private void CreateCollider() {
-        List<Vector2> points = new List<Vector2>();
-        for (int i = 0; i < lineRenderer.positionCount; i++) {
-            points.Add((Vector2)(lineRenderer.GetPosition(i)));
-        }
-        edgeCollider.SetPoints(points);
-    }
-
-    public int GetNumPositions() { return numPositions; }
-    public float GetSize() { return size; }
-    public float GetMaxIncrement() { return maxIncrement; }
-    public float GetYScale() { return yScale; }
 }

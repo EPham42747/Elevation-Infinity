@@ -1,0 +1,7 @@
+Watch out for "Some projects have trouble loading" in VS Code.
+This usually means Omnisharp cannot properly start up a Mono server.
+
+settings.json has the required fixes.
+Just uninstall and reinstall the C# extension from the Marketplace and restart the app.
+
+See https://github.com/OmniSharp/omnisharp-vscode/issues/5092 for more info.
