@@ -29,6 +29,6 @@ public class CameraMovement : MonoBehaviour {
     }
 
     private void Zoom() {
-        cam.orthographicSize = Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, movement.GetNormalizedVelocity() * maxZoom, zoomLerpTime), minZoom, maxZoom);
+        cam.fieldOfView = Mathf.Clamp(Mathf.Lerp(cam.fieldOfView, movement.GetNormalizedVelocity() * maxZoom, zoomLerpTime), minZoom, maxZoom);
     }
 }

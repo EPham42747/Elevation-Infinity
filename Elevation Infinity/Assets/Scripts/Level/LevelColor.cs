@@ -54,14 +54,14 @@ public class LevelColor : MonoBehaviour {
 
         camera.backgroundColor = gradient.Evaluate(1f);
         
-        
+
         Gradient minimum = new Gradient(), maximum = new Gradient();
         GradientAlphaKey[] minAlpha = new GradientAlphaKey[2], maxAlpha = new GradientAlphaKey[2];
         GradientColorKey[] color = new GradientColorKey[2];
 
-        minAlpha[0] = new GradientAlphaKey(1f / 255f * 125f, 0f);
+        minAlpha[0] = new GradientAlphaKey(1f, 0f);
         minAlpha[1] = new GradientAlphaKey(0f, 0.75f);
-        maxAlpha[0] = new GradientAlphaKey(1f / 255f * 200f, 0f);
+        maxAlpha[0] = new GradientAlphaKey(1f, 0f);
         maxAlpha[1] = new GradientAlphaKey(0f, 1f);
         color[0] = new GradientColorKey(gradient.Evaluate(0f), 0f);
         color[1] = new GradientColorKey(gradient.Evaluate(0f), 1f);
