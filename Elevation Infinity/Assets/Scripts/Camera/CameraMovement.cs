@@ -8,13 +8,14 @@ public class CameraMovement : MonoBehaviour {
 
     [Header("Follow")]
     [SerializeField] private Transform target;
-    [SerializeField] private float followLerpTime;
+    [SerializeField] private float followTime;
 
     [Header("Zoom")]
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private float minZoom;
     [SerializeField] private float maxZoom;
-    [SerializeField] private float zoomLerpTime;
+    [SerializeField] private float zoomTime;
+
     private void Start() {
         cam = GetComponent<Camera>();
     }
@@ -25,10 +26,10 @@ public class CameraMovement : MonoBehaviour {
     }
 
     private void Follow() {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, transform.position.z), followLerpTime);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, -10f), followTime * Time.deltaTime);
     }
 
     private void Zoom() {
-        cam.fieldOfView = Mathf.Clamp(Mathf.Lerp(cam.fieldOfView, movement.GetNormalizedVelocity() * maxZoom, zoomLerpTime), minZoom, maxZoom);
+        cam.orthographicSize = Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, movement.GetNormalizedVelocity() * maxZoom, zoomTime * Time.deltaTime), minZoom, maxZoom);
     }
 }

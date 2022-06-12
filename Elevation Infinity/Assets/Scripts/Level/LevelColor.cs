@@ -23,7 +23,7 @@ public class LevelColor : MonoBehaviour {
         SelectColor();
     }
 
-    private void SelectColor() {
+    public void SelectColor() {
         seed = (int)(Random.Range(0f, 5f));
         
         switch (seed) {

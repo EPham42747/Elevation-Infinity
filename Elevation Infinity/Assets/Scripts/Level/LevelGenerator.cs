@@ -93,7 +93,7 @@ public class LevelGenerator : MonoBehaviour {
         for (int i = 0, j = 0; i < numPositions * 2; i += 2, j++) {
             Vector3 linePosition = lineRenderer.GetPosition(j);
             vertices.Add(linePosition);
-            vertices.Add(new Vector3(linePosition.x, -1000f, 0f));
+            vertices.Add(new Vector3(linePosition.x, linePosition.y - 100f, 0f));
         }
 
         // Connect every group of vertices into triangles
@@ -124,5 +124,15 @@ public class LevelGenerator : MonoBehaviour {
     private bool PastThreshold() {
         if (positions[0].x < player.position.x - despawnThreshold) return true;
         return false;
+    }
+
+    public void Reset() {
+        x = 0f;
+        a = 0;
+        seed = Random.Range(0f, 1f);
+        
+        CreateLine();
+        UpdateFill();
+        UpdateCollider();
     }
 }

@@ -11,9 +11,8 @@ public class BackgroundGenerator : MonoBehaviour {
     private MeshFilter meshFilter;
 
     [Header("Background Generator")]
-    [SerializeField] private float yOffset;
+    [SerializeField] private LineRenderer levelLR;
     [SerializeField] private int numPositions;
-    [SerializeField] private float maxIncrement;
     [SerializeField] private float size;
     [SerializeField] private float yScale;
     [SerializeField] private float zPosition;
@@ -21,8 +20,6 @@ public class BackgroundGenerator : MonoBehaviour {
     [Header("Resource Management")]
     [SerializeField] private Transform player;
     [SerializeField] private float despawnThreshold;
-
-    private float x = 0f;
     private int a = 0;
     private float seed;
     private Vector3[] positions;
@@ -53,12 +50,8 @@ public class BackgroundGenerator : MonoBehaviour {
 
         for (int i = 1; i < numPositions; i++) {
             float perlin = Mathf.PerlinNoise(i / size, seed);
-            float increment = (1 - perlin) * maxIncrement;
-
-            positions[i] = new Vector3(x, positions[i - 1].y - yScale * perlin, zPosition);
-            x += increment;
+            positions[i] = new Vector3(levelLR.GetPosition(i).x, levelLR.GetPosition(i).y + yScale * perlin, zPosition);
         }
-        for (int i = 0; i < numPositions; i++) positions[i].y += yOffset;
 
         a = numPositions;
 
@@ -73,10 +66,8 @@ public class BackgroundGenerator : MonoBehaviour {
 
         // Create new position
         float perlin = Mathf.PerlinNoise(a / size, seed);
-        float increment = (1 - perlin) * maxIncrement;
 
-        positions[numPositions - 1] = new Vector3(x, positions[numPositions - 2].y - yScale * perlin, zPosition);
-        x += increment;
+        positions[numPositions - 1] = new Vector3(levelLR.GetPosition(numPositions - 2).x, levelLR.GetPosition(numPositions - 2).y + yScale * perlin, zPosition);
         a++;
 
         lineRenderer.SetPositions(positions);
@@ -90,7 +81,7 @@ public class BackgroundGenerator : MonoBehaviour {
         for (int i = 0, j = 0; i < numPositions * 2; i += 2, j++) {
             Vector3 linePosition = lineRenderer.GetPosition(j);
             vertices.Add(linePosition);
-            vertices.Add(new Vector3(linePosition.x, -1000f, 0f));
+            vertices.Add(new Vector3(linePosition.x, linePosition.y - 100f, 0f));
         }
 
         // Connect every group of vertices into triangles
@@ -112,5 +103,13 @@ public class BackgroundGenerator : MonoBehaviour {
     private bool PastThreshold() {
         if (positions[0].x < player.position.x - despawnThreshold) return true;
         return false;
+    }
+
+    public void Reset() {
+        a = 0;
+        seed = Random.Range(0f, 1f);
+        
+        CreateLine();
+        UpdateFill();
     }
 }
