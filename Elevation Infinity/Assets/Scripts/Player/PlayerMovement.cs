@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float rotationForce;
     [SerializeField] private float maxRotationSpeed;
+    [SerializeField] private float threshold;
 
     [Header("Velocity Clamping")]
     [SerializeField] private float maxXSpeed;
