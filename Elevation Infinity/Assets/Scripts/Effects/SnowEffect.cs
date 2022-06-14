@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
@@ -47,5 +45,7 @@ public class SnowEffect : MonoBehaviour {
         if (playerMovement.GetGrounded()) transform.eulerAngles = player.eulerAngles + Vector3.forward * rotationOffset;
     }
 
-    private bool GetGrounded() { return Physics2D.Raycast(groundChecker.position, Vector2.down, checkDistance, groundLayer); }
+    private bool GetGrounded() {
+        return Physics2D.Raycast(groundChecker.position, Vector2.down, checkDistance, groundLayer);
+    }
 }

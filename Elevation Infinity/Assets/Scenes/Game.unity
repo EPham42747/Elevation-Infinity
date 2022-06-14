@@ -695,6 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1619307837}
   followTime: 7.5
+  offset: {x: 1.25, y: -0.25}
   movement: {fileID: 1619307838}
   minZoom: 5
   maxZoom: 10
@@ -978,7 +979,6 @@ MonoBehaviour:
   front: {fileID: 2100000, guid: 3144de300b7774995b76bc0a260d29de, type: 2}
   back: {fileID: 2100000, guid: 73a5d9df5b95f434894c22b3c7d390d8, type: 2}
   camera: {fileID: 519420031}
-  particles: {fileID: 609366222}
   orange:
     serializedVersion: 2
     key0: {r: 1, g: 0.7058824, b: 0.5019608, a: 1}

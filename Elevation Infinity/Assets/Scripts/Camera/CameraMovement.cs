@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -9,6 +7,7 @@ public class CameraMovement : MonoBehaviour {
     [Header("Follow")]
     [SerializeField] private Transform target;
     [SerializeField] private float followTime;
+    [SerializeField] private Vector2 offset;
 
     [Header("Zoom")]
     [SerializeField] private PlayerMovement movement;
@@ -26,7 +25,7 @@ public class CameraMovement : MonoBehaviour {
     }
 
     private void Follow() {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, -10f), followTime * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x + offset.x, target.position.y + offset.y, -10f), followTime * Time.deltaTime);
     }
 
     private void Zoom() {
