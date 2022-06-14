@@ -18,7 +18,7 @@ I got some basic functionality down so that the game works, but there is not muc
 
 ## To-Dos
 
-- Trick system and scoring
+- Trick system and scoring  
     I was not able to implement this because Unity handles rotations in quaternions instead of vectors.  
     I tried to learn about how to work with quaternions, but in the end I ran out of time.  
 - Coins
