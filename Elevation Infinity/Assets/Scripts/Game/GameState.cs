@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameState : MonoBehaviour {
     [SerializeField] private PlayerInput playerInput;
-
     public enum State { Main, Game, Death }
     private State currentState;
 
     private void Start() {
         currentState = State.Main;
     }
-
+    
     private void Update() {
         if (playerInput.GetClick()) AdvanceGameState();
     }

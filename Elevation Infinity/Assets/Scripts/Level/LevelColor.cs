@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelColor : MonoBehaviour {
@@ -7,7 +5,6 @@ public class LevelColor : MonoBehaviour {
     [SerializeField] private Material front;
     [SerializeField] private Material back;
     [SerializeField] private new Camera camera;
-    [SerializeField] private ParticleSystem particles;
 
     [Header("Color Schemes")]
     [SerializeField] private Gradient orange;
@@ -53,27 +50,5 @@ public class LevelColor : MonoBehaviour {
         back.color = gradient.Evaluate(0.5f);
 
         camera.backgroundColor = gradient.Evaluate(1f);
-        
-
-        Gradient minimum = new Gradient(), maximum = new Gradient();
-        GradientAlphaKey[] minAlpha = new GradientAlphaKey[2], maxAlpha = new GradientAlphaKey[2];
-        GradientColorKey[] color = new GradientColorKey[2];
-
-        minAlpha[0] = new GradientAlphaKey(1f, 0f);
-        minAlpha[1] = new GradientAlphaKey(0f, 0.75f);
-        maxAlpha[0] = new GradientAlphaKey(1f, 0f);
-        maxAlpha[1] = new GradientAlphaKey(0f, 1f);
-        color[0] = new GradientColorKey(gradient.Evaluate(0f), 0f);
-        color[1] = new GradientColorKey(gradient.Evaluate(0f), 1f);
-
-        minimum.SetKeys(color, minAlpha);
-        maximum.SetKeys(color, maxAlpha);
-
-        ParticleSystem.MinMaxGradient minMax = new ParticleSystem.MinMaxGradient(minimum, maximum);
-
-        var main = particles.main;
-        var mode = particles.main.startColor.mode;
-        mode = ParticleSystemGradientMode.TwoGradients;
-        main.startColor = minMax;
     }
 }

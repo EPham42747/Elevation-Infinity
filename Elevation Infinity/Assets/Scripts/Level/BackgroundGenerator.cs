@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,7 +51,6 @@ public class BackgroundGenerator : MonoBehaviour {
             float perlin = Mathf.PerlinNoise(i / size, seed);
             positions[i] = new Vector3(levelLR.GetPosition(i).x, levelLR.GetPosition(i).y + yScale * perlin, zPosition);
         }
-
         a = numPositions;
 
         lineRenderer.SetPositions(positions);
@@ -66,7 +64,6 @@ public class BackgroundGenerator : MonoBehaviour {
 
         // Create new position
         float perlin = Mathf.PerlinNoise(a / size, seed);
-
         positions[numPositions - 1] = new Vector3(levelLR.GetPosition(numPositions - 2).x, levelLR.GetPosition(numPositions - 2).y + yScale * perlin, zPosition);
         a++;
 
