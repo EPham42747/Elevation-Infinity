@@ -8,6 +8,11 @@ Overall, I had a ton of ideas but the project itself was too ambitious.
 There were a ton of things I simply did not have the time to do.  
 I got some basic functionality down so that the game works, but there is not much to do in the game.
 
+## Submission
+
+Applications found in "Builds".  
+Scripts found in "Elevation Infinity/Assets/Scripts", divided by containing GameObject.
+
 ## Functionality
 
 - Infinite level generation
